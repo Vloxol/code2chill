@@ -1,0 +1,1036 @@
+/* ============================================================
+   Shared section pieces
+   ============================================================ */
+
+.sheet {
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 -2.5rem 4rem rgba(6, 23, 31, 0.28);
+}
+.sec {
+  position: relative;
+  padding: clamp(5rem, 11vw, 9rem) var(--gutter);
+}
+.sec--light {
+  background: var(--salt);
+  color: var(--ink);
+}
+.sec--dark {
+  background: var(--abyss);
+  color: var(--salt);
+}
+.sec--ink {
+  background: var(--ink);
+  color: var(--salt);
+}
+
+.charter__title,
+.ports__title,
+.crew__title,
+.cargo__title {
+  font-size: clamp(2.2rem, 5.2vw, 4.4rem);
+  font-weight: 750;
+  font-stretch: 78%;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+.charter__note,
+.ports__note,
+.crew__note,
+.cargo__note {
+  font: 500 0.85rem/1.4 var(--f-mono);
+  opacity: 0.78;
+}
+
+/* ============================================================
+   Hero: calm chart paper that tears open onto code
+   ============================================================ */
+
+.hero {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  display: grid;
+  align-items: end;
+  padding: 6rem var(--gutter) clamp(2rem, 6vh, 4.5rem);
+  background: var(--salt);
+  color: var(--ink);
+}
+.hero__chart {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero__copy {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 2.4vh, 1.8rem);
+}
+.hero__title {
+  font-size: clamp(2.9rem, 9vw, 8.8rem);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+.hero__title span {
+  display: block;
+}
+.hero__lede {
+  max-width: 34ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.32rem);
+  line-height: 1.42;
+  color: var(--ink-2);
+}
+.hero__tear {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero__hint {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(2rem, 6vh, 4.5rem);
+  z-index: 1;
+  font: 500 0.8rem/1.4 var(--f-mono);
+  color: var(--ink);
+  opacity: 0.75;
+  transition: opacity 0.8s;
+}
+.hero.is-touched .hero__hint {
+  opacity: 0;
+}
+.hint--touch {
+  display: none;
+}
+@media (pointer: coarse) {
+  .hint--fine {
+    display: none;
+  }
+  .hint--touch {
+    display: inline;
+  }
+}
+@media (max-width: 760px) {
+  .hero__hint {
+    top: 5.4rem;
+    bottom: auto;
+    left: var(--gutter);
+    right: auto;
+  }
+}
+
+/* ============================================================
+   Charter: copy on top, the code it compiles to under the lens
+   ============================================================ */
+
+.charter {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+.charter__head {
+  position: sticky;
+  top: 22vh;
+  display: grid;
+  gap: 1.2rem;
+}
+.charter__title {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+.xray {
+  --mx: -999px;
+  --my: -999px;
+  position: relative;
+  border-top: 1.5px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  font-size: clamp(1.7rem, 3.3vw, 3rem);
+  font-weight: 650;
+  font-stretch: 82%;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+}
+.xray__top,
+.xray__code {
+  display: block;
+  padding: clamp(1.4rem, 3vw, 2.4rem) 0;
+}
+.xray__top {
+  -webkit-mask-image: radial-gradient(circle var(--lens-r) at var(--mx) var(--my), transparent 98%, #000 100%);
+  mask-image: radial-gradient(circle var(--lens-r) at var(--mx) var(--my), transparent 98%, #000 100%);
+}
+.xray__code {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 2.6rem;
+  overflow: hidden;
+  font: 500 clamp(0.78rem, 1vw, 0.92rem) / 1.5 var(--f-mono);
+  letter-spacing: 0;
+  color: var(--phosphor);
+  background: var(--abyss);
+  padding-block: 0;
+  padding-inline: 1.2rem;
+  -webkit-mask-image: radial-gradient(circle var(--lens-r) at var(--mx) var(--my), #000 98%, transparent 100%);
+  mask-image: radial-gradient(circle var(--lens-r) at var(--mx) var(--my), #000 98%, transparent 100%);
+}
+.xray__code span {
+  flex: none;
+  white-space: pre;
+}
+@media (pointer: coarse) {
+  .charter__note {
+    display: none;
+  }
+}
+@media (max-width: 860px) {
+  .charter {
+    grid-template-columns: 1fr;
+  }
+  .charter__head {
+    position: static;
+  }
+}
+
+/* ============================================================
+   Ports: a draggable route chart
+   ============================================================ */
+
+.ports {
+  overflow: hidden;
+}
+.ports__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+.ports__track {
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 1rem;
+}
+.ports__track::-webkit-scrollbar {
+  display: none;
+}
+.ports__track.is-dragging {
+  user-select: none;
+}
+.ports__inner {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(80vw, 420px);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  width: max-content;
+  padding: 70px var(--gutter) 0 0;
+}
+/* the route line and its scale ticks */
+.ports__inner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40px;
+  border-top: 2px dashed color-mix(in srgb, var(--salt) 38%, transparent);
+}
+.ports__inner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 33px;
+  height: 14px;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--salt) 30%, transparent) 0 1.5px, transparent 1.5px 40px);
+  pointer-events: none;
+}
+.ports__ship {
+  --p: 0;
+  position: absolute;
+  z-index: 2;
+  top: -2px;
+  left: calc(var(--p) * (100% - 76px));
+  width: 64px;
+  animation: p-bob 2.4s steps(1, end) infinite;
+}
+.ports__ship svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@keyframes p-bob {
+  50% {
+    transform: translateY(3px);
+  }
+}
+.port {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-height: 330px;
+  padding: 2rem 1.8rem 2.2rem;
+  background: var(--abyss-2);
+  border: 1px solid rgba(226, 234, 229, 0.14);
+}
+.port__pin {
+  position: absolute;
+  top: -37px;
+  left: 1.8rem;
+  width: 14px;
+  height: 14px;
+  background: var(--brass);
+  transform: rotate(45deg);
+}
+.port__leg {
+  font: 500 0.8rem var(--f-mono);
+  color: var(--phosphor);
+}
+.port__title {
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
+  font-weight: 750;
+  font-stretch: 78%;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.port__blurb {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--brass);
+}
+.port__detail {
+  max-width: 34ch;
+  color: var(--mist);
+}
+
+/* ============================================================
+   Crew: a pixel ship on a pixel sea
+   ============================================================ */
+
+.crew {
+  position: relative;
+  padding-top: clamp(5rem, 11vw, 9rem);
+  background: #0e2347;
+  color: var(--salt);
+}
+.crew__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding-inline: var(--gutter);
+  margin-bottom: clamp(1.4rem, 4vw, 3rem);
+}
+.scene {
+  width: 100%;
+  aspect-ratio: 192 / 108;
+  background: #12365a;
+}
+@media (max-width: 700px) {
+  .scene {
+    aspect-ratio: 4 / 3;
+  }
+}
+.scene__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ship {
+  animation: s-bob 4.8s steps(1, end) infinite;
+}
+@keyframes s-bob {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  75% {
+    transform: translateY(1px);
+  }
+}
+.wave {
+  animation-name: s-slide;
+  animation-iteration-count: infinite;
+}
+.wave--a {
+  animation-duration: 96s;
+  animation-timing-function: steps(192);
+}
+.wave--b {
+  animation-duration: 64s;
+  animation-direction: reverse;
+  animation-timing-function: steps(192);
+}
+.wave--c {
+  animation-duration: 28s;
+  animation-timing-function: steps(96);
+}
+.wave--d {
+  animation-duration: 44s;
+  animation-direction: reverse;
+  animation-timing-function: steps(192);
+}
+@keyframes s-slide {
+  to {
+    transform: translateX(-192px);
+  }
+}
+.cloud {
+  animation-name: s-drift;
+  animation-timing-function: steps(250);
+  animation-iteration-count: infinite;
+}
+@keyframes s-drift {
+  from {
+    transform: translateX(-50px);
+  }
+  to {
+    transform: translateX(200px);
+  }
+}
+.stars rect {
+  animation: s-twinkle 4s steps(1) infinite;
+}
+@keyframes s-twinkle {
+  0%,
+  62% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.15;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.pennant__a {
+  animation: s-flap-a 0.9s steps(1) infinite;
+}
+.pennant__b {
+  animation: s-flap-b 0.9s steps(1) infinite;
+}
+@keyframes s-flap-a {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes s-flap-b {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.steam__0 {
+  animation: s-st0 1.8s steps(1) infinite;
+}
+.steam__1 {
+  animation: s-st1 1.8s steps(1) infinite;
+}
+.steam__2 {
+  animation: s-st2 1.8s steps(1) infinite;
+}
+@keyframes s-st0 {
+  0% {
+    opacity: 1;
+  }
+  33.3% {
+    opacity: 0;
+  }
+}
+@keyframes s-st1 {
+  0% {
+    opacity: 0;
+  }
+  33.3% {
+    opacity: 1;
+  }
+  66.6% {
+    opacity: 0;
+  }
+}
+@keyframes s-st2 {
+  0% {
+    opacity: 0;
+  }
+  66.6% {
+    opacity: 1;
+  }
+}
+.sailor.is-active {
+  animation: s-hop 0.7s steps(1) infinite;
+}
+@keyframes s-hop {
+  50% {
+    transform: translateY(-1px);
+  }
+}
+.hit {
+  outline: none;
+}
+.hit:focus-visible {
+  stroke: #edb52e;
+  stroke-width: 0.8;
+  stroke-dasharray: 2 1;
+}
+
+.manifest {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter) clamp(4rem, 9vw, 7rem);
+  background: #12365a;
+}
+.manifest__card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.4rem;
+  padding: 1.6rem;
+  background: #101820;
+  border: 4px solid var(--brass);
+  box-shadow: 6px 6px 0 #06171f;
+}
+.manifest__role {
+  font: 800 clamp(1.7rem, 3vw, 2.4rem) / 1 var(--f-display);
+  font-stretch: 78%;
+  letter-spacing: -0.01em;
+  color: var(--brass);
+}
+.manifest__title {
+  margin-top: 0.35rem;
+  font: 500 0.82rem var(--f-mono);
+  color: var(--phosphor);
+}
+.manifest__duty {
+  margin-top: 1rem;
+  max-width: 44ch;
+  color: var(--mist);
+}
+.avatar {
+  display: block;
+  width: 84px;
+  height: auto;
+  background: #1b4a72;
+  image-rendering: pixelated;
+}
+.manifest__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 0.7rem;
+}
+.manifest__list button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+  background: #0e2c4a;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font: 500 1rem var(--f-pixel);
+  text-align: left;
+}
+.manifest__list button .avatar {
+  width: 30px;
+  flex: none;
+}
+.manifest__list .who {
+  display: grid;
+  gap: 0.15rem;
+  line-height: 1.05;
+}
+.manifest__list .who b {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-stretch: 85%;
+  font-size: 1.05rem;
+}
+.manifest__list .who i {
+  font: 500 0.7rem var(--f-mono);
+  color: var(--phosphor);
+}
+.manifest__list button:hover,
+.manifest__list button.is-on {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+@media (max-width: 860px) {
+  .manifest {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Cargo: crates from the hold
+   ============================================================ */
+
+.cargo__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+.cargo__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: start;
+}
+.crate {
+  border: 2px solid var(--brass);
+  background:
+    linear-gradient(45deg, transparent calc(50% - 1px), rgba(237, 181, 46, 0.16) calc(50% - 1px), rgba(237, 181, 46, 0.16) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), rgba(237, 181, 46, 0.16) calc(50% - 1px), rgba(237, 181, 46, 0.16) calc(50% + 1px), transparent calc(50% + 1px)),
+    var(--ink-2);
+  box-shadow: inset 0 0 0 7px var(--ink-2), inset 0 0 0 9px rgba(237, 181, 46, 0.35);
+  transition: background-color 0.3s;
+}
+.crate.is-open {
+  background: var(--ink-2);
+}
+.crate__btn {
+  display: grid;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 1.9rem 1.8rem 2rem;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.crate__status {
+  font: 500 0.75rem var(--f-mono);
+  color: var(--brass);
+}
+.crate__title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 750;
+  font-stretch: 78%;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.crate__blurb {
+  color: #c9d6e6;
+}
+.crate__more {
+  padding: 0 1.8rem 1.9rem;
+  display: grid;
+  gap: 1rem;
+  color: #c9d6e6;
+}
+.crate__more[hidden] {
+  display: none;
+}
+.crate__stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.crate__stack li {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgba(226, 234, 229, 0.4);
+  font: 500 0.75rem var(--f-mono);
+  color: var(--salt);
+}
+.crate__link {
+  font-weight: 700;
+  color: var(--brass);
+}
+
+/* ============================================================
+   Dock: sign up
+   ============================================================ */
+
+.dock {
+  padding-bottom: 2rem;
+}
+.dock__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: end;
+  min-height: 70vh;
+}
+.dock__title {
+  font-size: clamp(3.4rem, 10.5vw, 9.6rem);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+.dock__lede {
+  margin-top: 1.6rem;
+  max-width: 36ch;
+  font-size: 1.2rem;
+  color: var(--mist);
+}
+.dock__form {
+  display: grid;
+  gap: 1.5rem;
+}
+.dock__form label {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.dock__form input,
+.dock__form select,
+.dock__form textarea {
+  width: 100%;
+  padding: 0.65rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid rgba(226, 234, 229, 0.4);
+  border-radius: 0;
+  font-weight: 400;
+  font-size: 1.1rem;
+  transition: border-color 0.2s;
+}
+.dock__form select option {
+  background: var(--abyss);
+  color: var(--salt);
+}
+.dock__form textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+}
+.dock__form input:focus,
+.dock__form select:focus,
+.dock__form textarea:focus {
+  outline: none;
+  border-bottom-color: var(--brass);
+}
+.dock__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.dock__form .has-error input,
+.dock__form .has-error textarea {
+  border-bottom-color: #ff8a6b;
+}
+.err,
+.dock__error {
+  color: #ff8a6b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.dock__btn {
+  justify-self: start;
+  padding: 1.05rem 2.6rem 1.05rem 1.9rem;
+  border: 0;
+  background: var(--brass);
+  color: var(--abyss);
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 50%, 100% 100%, 0 100%);
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), background 0.2s;
+}
+.dock__btn:hover {
+  background: #f6c64a;
+}
+.dock__btn:disabled {
+  opacity: 0.7;
+}
+.dock__done {
+  display: grid;
+  gap: 0.8rem;
+  padding: 2rem;
+  border: 2px solid var(--brass);
+}
+.dock__done h3 {
+  font-size: 2rem;
+  font-weight: 750;
+  font-stretch: 78%;
+  line-height: 1;
+}
+.dock__again {
+  justify-self: start;
+  margin-top: 0.6rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-bottom: 1.5px solid currentColor;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dock__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  margin-top: clamp(4rem, 9vw, 7rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(226, 234, 229, 0.18);
+  font-size: 0.9rem;
+  color: var(--mist);
+}
+@media (max-width: 860px) {
+  .dock__grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+}
+@media (max-width: 480px) {
+  .dock__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Easter egg: the goat
+   ============================================================ */
+
+.goat {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 9000;
+  width: 96px;
+  will-change: transform;
+}
+.goat__btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  animation: g-rise 0.6s steps(6) both;
+}
+@keyframes g-rise {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+.goat__shadow {
+  position: absolute;
+  left: 14%;
+  right: 8%;
+  bottom: 0;
+  height: 5px;
+  background: rgba(6, 23, 31, 0.35);
+}
+.goat__hop,
+.goat__flip,
+.goat__bob {
+  display: block;
+}
+.goat[data-dir='-1'] .goat__flip {
+  transform: scaleX(-1);
+}
+.goat[data-hop='1'] .goat__hop {
+  animation: g-hop 0.52s steps(5);
+}
+@keyframes g-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40%,
+  60% {
+    transform: translateY(-22px);
+  }
+}
+.gf {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gf--a,
+.gf--b {
+  display: none;
+}
+.goat[data-moving='0'] .goat__bob {
+  animation: g-breathe 1.8s steps(1) infinite;
+}
+@keyframes g-breathe {
+  50% {
+    transform: translateY(1px);
+  }
+}
+.goat[data-moving='1'] .gf--idle {
+  display: none;
+}
+.goat[data-moving='1'] .gf--a,
+.goat[data-moving='1'] .gf--b {
+  display: block;
+}
+.goat[data-moving='1'] .gf--b {
+  position: absolute;
+  inset: 0;
+  animation: g-step 0.36s steps(1) infinite;
+}
+.goat[data-moving='1'] .gf--a {
+  animation: g-step-inv 0.36s steps(1) infinite;
+}
+@keyframes g-step {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes g-step-inv {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.goat__bob {
+  position: relative;
+}
+
+.goat__card {
+  position: fixed;
+  bottom: 116px;
+  z-index: 9001;
+  width: 210px;
+  padding: 0.9rem 1rem 1rem;
+  background: #101820;
+  border: 4px solid var(--brass);
+  box-shadow: 5px 5px 0 #06171f;
+  color: var(--salt);
+  font-family: var(--f-pixel);
+  animation: g-rise 0.35s steps(4) both;
+}
+.goat__card::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: var(--notch, 38px);
+  width: 10px;
+  height: 10px;
+  background: var(--brass);
+}
+.goat__title {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--brass);
+}
+.goat__name {
+  margin-top: 0.7rem;
+  font-size: 1.15rem;
+  line-height: 1.1;
+}
+.goat__branch {
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  color: var(--phosphor);
+}
+
+.dock__official {
+  display: inline-block;
+  margin-top: 1.2rem;
+  font-weight: 700;
+  color: var(--brass);
+}
+
+.goat__flip {
+  position: relative;
+}
+/* speed lines trail behind the goat while it dashes */
+.goat__lines {
+  display: none;
+  position: absolute;
+  right: 78%;
+  top: 22%;
+  width: 54px;
+  height: 46px;
+  background:
+    linear-gradient(#efeada, #efeada) 100% 0 / 100% 4px no-repeat,
+    linear-gradient(#efeada, #efeada) 100% 20px / 72% 4px no-repeat,
+    linear-gradient(#efeada, #efeada) 100% 40px / 90% 4px no-repeat;
+}
+.goat[data-dash='1'] .goat__lines {
+  display: block;
+}
+.goat[data-dash='1'] .goat__bob {
+  transform: scaleX(1.1);
+}
+.goat[data-dash='1'][data-moving='1'] .gf--a,
+.goat[data-dash='1'][data-moving='1'] .gf--b {
+  animation-duration: 0.14s;
+}
+
+/* a cloud of dust where the goat was standing */
+.goat__puff {
+  position: fixed;
+  bottom: -4px;
+  z-index: 9002;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.puff {
+  position: absolute;
+  bottom: 0;
+  transform-origin: 50% 100%;
+  animation: g-puff 0.75s steps(7) both;
+}
+.puff.p1 {
+  left: -48px;
+  width: 96px;
+}
+.puff.p2 {
+  left: -76px;
+  width: 64px;
+  animation-delay: 0.06s;
+}
+.puff.p3 {
+  left: 12px;
+  width: 64px;
+  animation-delay: 0.1s;
+}
+@keyframes g-puff {
+  0% {
+    transform: scale(0.25);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1.1) translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.45) translateY(-26px);
+    opacity: 0;
+  }
+}

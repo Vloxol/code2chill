@@ -1,0 +1,327 @@
+/* One cursor, six personalities. Modes are chosen by data-cursor on the section under the pointer. */
+
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+  color: var(--hfg);
+}
+.cursor[data-on='1'] {
+  opacity: 1;
+}
+
+.cursor[data-mode='lens'],
+.cursor[data-mode='helm'],
+.cursor[data-mode='crate'],
+.cursor[data-mode='anchor'] {
+  color: var(--brass);
+}
+.cursor[data-mode='spy'] {
+  color: var(--salt);
+}
+
+.cursor__dot,
+.cursor__body {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+.cursor__dot::before {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: currentColor;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.cursor:not([data-mode='ring']) .cursor__dot::before {
+  opacity: 0;
+}
+.cursor[data-down='1'] .cursor__dot::before {
+  transform: scale(0.6);
+}
+
+.shape {
+  --s: 48px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.25);
+}
+.cursor[data-mode='ring'] .shape--ring,
+.cursor[data-mode='tear'] .shape--tear,
+.cursor[data-mode='lens'] .shape--lens,
+.cursor[data-mode='helm'] .shape--helm,
+.cursor[data-mode='spy'] .shape--spy,
+.cursor[data-mode='crate'] .shape--crate,
+.cursor[data-mode='anchor'] .shape--anchor {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ring: default, and over links and buttons */
+.shape--ring {
+  --s: 28px;
+}
+.shape--ring i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.cursor[data-hover='1'][data-mode='ring'] .shape--ring {
+  transform: scale(1.8);
+}
+.cursor[data-hover='1'][data-mode='ring'] .shape--ring i {
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+/* tear: a sailmaker's needle, tip on the pointer, turning to face your movement */
+.shape--tear {
+  --s: 100px;
+}
+.shape--tear svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(var(--hd, -135deg));
+  filter: drop-shadow(1.5px 2px 0 rgba(6, 23, 31, 0.4));
+}
+.shape--tear .needle {
+  fill: #efeada;
+  stroke: #12306b;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.shape--tear .collar {
+  stroke: #edb52e;
+  stroke-width: 2;
+}
+.shape--tear .eye {
+  fill: #12306b;
+}
+.cursor[data-hover='1'][data-mode='tear'] .shape--tear {
+  transform: scale(0.8);
+}
+.cursor[data-down='1'][data-mode='tear'] .shape--tear {
+  transform: scale(1.25);
+}
+
+/* the thread trails the needle's eye and follows it around */
+.cursor__thread {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cursor__thread path {
+  fill: none;
+  stroke: #e4572e;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cursor[data-mode='tear'] .cursor__thread {
+  opacity: 1;
+}
+
+/* lens: an x-ray over the copy */
+.shape--lens {
+  --s: calc(var(--lens-r) * 2);
+}
+.shape--lens i {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--brass);
+  box-shadow: 0 0 0 2px #06171f, inset 0 0 0 2px #06171f;
+}
+.shape--lens i::before,
+.shape--lens i::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  margin: -1px 0 0 -7px;
+  background: var(--brass);
+}
+.shape--lens i::after {
+  transform: rotate(90deg);
+}
+.cursor[data-down='1'][data-mode='lens'] .shape--lens {
+  transform: scale(0.92);
+}
+
+/* helm: a ship's wheel; steering spins it */
+.shape--helm {
+  --s: 68px;
+}
+.shape--helm svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--brass);
+  stroke-width: 2.4;
+  transform: rotate(var(--rot, 0deg));
+}
+.shape--helm .fill {
+  fill: var(--brass);
+  stroke: none;
+}
+.cursor[data-down='1'][data-mode='helm'] .shape--helm {
+  transform: scale(0.85);
+}
+
+/* spy: a pixel spyglass reticle that snaps to a grid and locks onto sailors */
+.shape--spy {
+  --lw: 44px;
+  --lh: 44px;
+  --spy: var(--salt);
+  width: var(--lw);
+  height: var(--lh);
+  margin: calc(var(--lh) / -2) 0 0 calc(var(--lw) / -2);
+  transition: opacity 0.2s, transform 0.3s, width 0.16s steps(3), height 0.16s steps(3), margin 0.16s steps(3);
+}
+.cursor[data-lock='0'] .shape--spy {
+  --lw: 44px;
+  --lh: 44px;
+}
+.cursor[data-lock='1'] .shape--spy {
+  --spy: var(--brass);
+}
+.shape--spy i {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0 solid var(--spy);
+}
+.shape--spy i:nth-child(1) {
+  left: 0;
+  top: 0;
+  border-width: 2px 0 0 2px;
+}
+.shape--spy i:nth-child(2) {
+  right: 0;
+  top: 0;
+  border-width: 2px 2px 0 0;
+}
+.shape--spy i:nth-child(3) {
+  left: 0;
+  bottom: 0;
+  border-width: 0 0 2px 2px;
+}
+.shape--spy i:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-width: 0 2px 2px 0;
+}
+.shape--spy b {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background: var(--brass);
+}
+.cursor[data-lock='1'] .shape--spy b {
+  opacity: 0;
+}
+
+/* crate: opens on click */
+.shape--crate {
+  --s: 52px;
+}
+.shape--crate svg,
+.shape--anchor svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--brass);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.shape--crate .fill {
+  fill: var(--brass);
+  stroke: none;
+}
+.cursor[data-hover='1'][data-mode='crate'] .shape--crate {
+  transform: scale(1.2) rotate(-6deg);
+}
+
+/* anchor: drops when you press */
+.shape--anchor {
+  --s: 48px;
+}
+.cursor[data-down='1'][data-mode='anchor'] .shape--anchor {
+  transform: translateY(12px) scale(0.92);
+}
+.cursor[data-hover='1'][data-mode='anchor'] .shape--anchor {
+  transform: scale(1.25);
+}
+
+/* label tag next to the cursor */
+.cursor__label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(26px, 22px);
+  padding: 0.38rem 0.6rem;
+  background: var(--brass);
+  color: #06171f;
+  font: 600 0.72rem/1 var(--f-mono);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.cursor[data-label='1'] .cursor__label {
+  opacity: 1;
+}
+.cursor[data-mode='spy'] .cursor__label {
+  font-weight: 700;
+}
+
+.cursor__ripple {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  animation: c-ripple 0.65s ease-out forwards;
+}
+.cursor[data-mode='spy'] .cursor__ripple {
+  border-radius: 0;
+  animation-timing-function: steps(6);
+}
+@keyframes c-ripple {
+  to {
+    transform: scale(7);
+    opacity: 0;
+  }
+}

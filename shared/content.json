@@ -1,0 +1,145 @@
+{
+  "club": {
+    "name": "Code2Chill",
+    "short": "C2C",
+    "university": "Chitkara University",
+    "url": "https://chitkarau.life/clubs/code2chill",
+    "leader": "Lakshay Kalra",
+    "members": 107,
+    "capacity": 110,
+    "upcomingNote": "Nothing is scheduled right now.",
+    "sample": "Seat counts, crew and events come from the club page as of 23 Nov 2026. Update them here, then run `npm run seed` if you use MongoDB."
+  },
+  "charter": [
+    {
+      "text": "We close the gap between the classroom and the industry.",
+      "code": "let gap = industry.needs\n        - classroom.teaches;\nwhile (gap > 0) {\n  gap -= await build();\n}"
+    },
+    {
+      "text": "Student-led, start to finish.",
+      "code": "club.ledBy = \"students\";\nclub.members.forEach(\n  (m) => m.lead()\n);"
+    },
+    {
+      "text": "Ship on the weekend. Chill in the evening.",
+      "code": "if (shipped) {\n  chill();\n} else {\n  debug();\n  chill();\n}"
+    }
+  ],
+  "ports": [
+    {
+      "id": "workshops",
+      "title": "Workshops",
+      "blurb": "Learn the tool in one evening.",
+      "detail": "Hands-on sessions across web and mobile, AI and ML, cybersecurity, cloud and IoT."
+    },
+    {
+      "id": "competitions",
+      "title": "Coding competitions",
+      "blurb": "Test what you know.",
+      "detail": "Challenges that turn classroom knowledge into something you can run and show."
+    },
+    {
+      "id": "hackathons",
+      "title": "Hackathons",
+      "blurb": "Race the tide.",
+      "detail": "Time-boxed builds where teams solve real problems against the clock."
+    },
+    {
+      "id": "talks",
+      "title": "Talks and build sessions",
+      "blurb": "Learn from people, then build.",
+      "detail": "Technical talks, project-building sessions and skill-development programs."
+    }
+  ],
+  "crew": [
+    {
+      "slot": "captain",
+      "role": "Captain",
+      "title": "Club Leader",
+      "name": "Lakshay Kalra",
+      "duty": "Sets the heading and keeps the whole ship pointed at something worth building."
+    },
+    {
+      "slot": "navigator",
+      "role": "Navigator",
+      "title": "Technical Head",
+      "name": "Samanyu Thakur",
+      "duty": "Up the mast, calling out what's ahead: the right stack, the next bug, the shortest route to a working build."
+    },
+    {
+      "slot": "rigger",
+      "role": "Rigger",
+      "title": "Technical Head",
+      "name": "Bhupinder Singh",
+      "duty": "Keeps the ropes tight on the foremast, so every technical event runs smoothly."
+    },
+    {
+      "slot": "sailmaker",
+      "role": "Sailmaker",
+      "title": "Content Head",
+      "name": "Tamanna Kakkar",
+      "duty": "Paints the sails: the posts, posters and stories that show what the club makes."
+    },
+    {
+      "slot": "scribe",
+      "role": "Scribe",
+      "title": "Content Head",
+      "name": "Ayush Sharma",
+      "duty": "Keeps the ship's log. Writes down what the club builds and why it matters."
+    },
+    {
+      "slot": "bosun",
+      "role": "Bosun",
+      "title": "Social Media Head",
+      "name": "Jashan Bhalla",
+      "duty": "Blows the whistle online and calls all hands to every event."
+    },
+    {
+      "slot": "gunner",
+      "role": "Signal Gunner",
+      "title": "Promotion Head",
+      "name": "Muskan Dhanda",
+      "duty": "Fires the flares that tell the rest of campus we exist."
+    },
+    {
+      "slot": "firstmate",
+      "role": "Deckhand",
+      "title": "Core Member",
+      "name": "Jiya Arora",
+      "duty": "Hands on deck for every workshop, competition and build session."
+    },
+    {
+      "slot": "deckhand",
+      "role": "Deckhand",
+      "title": "Core Member",
+      "name": "Divyana Garg",
+      "duty": "Hands on deck for every workshop, competition and build session."
+    },
+    {
+      "slot": "cook",
+      "role": "Cook",
+      "title": "Core Member",
+      "name": "Hunar Mehndiratta",
+      "duty": "Keeps the galley warm and the vibes right. The chill in Code2Chill."
+    }
+  ],
+  "projects": [
+    {
+      "id": "domination",
+      "title": "DOMination",
+      "blurb": "The Frontend Challenge.",
+      "detail": "Held on Saturday, 18 July 2026. Full details are on the official event page.",
+      "stack": [],
+      "status": "Past event · 18 Jul 2026",
+      "link": "https://chitkarau.life/events/domination-the-frontend-challenge"
+    },
+    {
+      "id": "byte-the-vibe",
+      "title": "Byte The Vibe",
+      "blurb": "A Code2Chill event.",
+      "detail": "Held on Monday, 18 May 2026. Full details are on the official event page.",
+      "stack": [],
+      "status": "Past event · 18 May 2026",
+      "link": "https://chitkarau.life/events/byte-the-vibe"
+    }
+  ]
+}
